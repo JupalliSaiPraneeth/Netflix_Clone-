@@ -1,0 +1,141 @@
+:root {
+    --netflix-red: #e50914;
+    --dark-bg: #141414;
+    --transition-smooth: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+    background-color: var(--dark-bg);
+    color: #fff;
+    font-family: 'Helvetica Neue', Roboto, Arial, sans-serif;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+}
+
+/* --- Navigation --- */
+.nav {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    padding: 20px 4%;
+    display: flex;
+    align-items: center;
+    z-index: 1000;
+    background: linear-gradient(to bottom, rgba(0,0,0,0.8) 0%, transparent 100%);
+    transition: background-color 0.5s ease;
+}
+
+.nav__black { background-color: #111 !important; }
+.nav__logo { width: 100px; cursor: pointer; }
+
+.nav__links { margin-left: 25px; display: flex; gap: 20px; }
+.nav__links a { 
+    color: #e5e5e5; text-decoration: none; font-size: 0.85rem; 
+    transition: color 0.3s; 
+}
+.nav__links a:hover { color: #b3b3b3; }
+
+/* --- Hero Section with Motion --- */
+.hero {
+    position: relative;
+    height: 85vh;
+    color: white;
+    background-size: cover;
+    background-position: center center;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    transition: background-image 1.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.hero::before {
+    content: "";
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: inherit;
+    animation: heroZoom 20s infinite alternate linear;
+    z-index: -1;
+}
+
+@keyframes heroZoom {
+    from { transform: scale(1); }
+    to { transform: scale(1.12); }
+}
+
+.hero__vignette {
+    position: absolute;
+    width: 100%; height: 100%;
+    background: linear-gradient(77deg, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0) 85%);
+}
+
+.hero__contents {
+    position: relative;
+    padding-left: 4%;
+    max-width: 800px;
+    opacity: 0; 
+    transform: translateY(20px);
+    transition: opacity 1s ease-in-out, transform 1s cubic-bezier(0.2, 1, 0.2, 1);
+}
+
+.hero__title { font-size: 4.5rem; font-weight: 800; margin-bottom: 0.5rem; }
+.hero__description { font-size: 1.3rem; line-height: 1.4; max-width: 500px; }
+
+.hero__button {
+    cursor: pointer; border: none; font-weight: 700; border-radius: 4px;
+    padding: 0.7rem 1.8rem; margin-right: 1rem; margin-top: 1.5rem;
+    transition: var(--transition-smooth);
+}
+
+.play { background-color: white; color: black; }
+.info { background-color: rgba(109, 109, 110, 0.8); color: white; }
+
+.hero--fadeBottom {
+    position: absolute; bottom: 0; width: 100%; height: 15rem;
+    background-image: linear-gradient(180deg, transparent, rgba(20,20,20,0.5), var(--dark-bg));
+}
+
+/* --- Movie Rows (Hidden Scrollbar) --- */
+.row { margin-left: 20px; padding: 30px 0; }
+.row__title { font-size: 1.6rem; padding-left: 10px; margin-bottom: 15px; font-weight: 700; }
+
+.row__posters {
+    display: flex; 
+    overflow-y: hidden; 
+    overflow-x: scroll; 
+    padding: 20px 10px 40px 10px;
+    scroll-behavior: smooth; /* Enables smooth JS scrolling */
+    
+    /* Hide scrollbar for Firefox */
+    scrollbar-width: none; 
+}
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+.row__posters::-webkit-scrollbar {
+    display: none;
+}
+
+.row__poster {
+    min-width: 200px; 
+    height: 300px; 
+    object-fit: cover; 
+    margin-right: 15px; 
+    border-radius: 8px; 
+    cursor: pointer;
+    transition: var(--transition-smooth);
+    transform: translateZ(0); 
+    filter: brightness(0.85);
+}
+
+.row__poster:hover {
+    transform: scale(1.1) translateY(-15px); 
+    z-index: 100; 
+    filter: brightness(1.1);
+    box-shadow: 0px 15px 30px rgba(0,0,0,0.9);
+}
+
+.row__posters:hover .row__poster:not(:hover) {
+    opacity: 0.5; 
+    filter: grayscale(0.2) brightness(0.6);
+}
